@@ -8,6 +8,10 @@
   {% block stylesheets %}
   {% endblock %}
 
+        {% block current %}
+          <li class="active"><a href="{{ path('op_trade_homepage') }}">Home</a></li>
+          <li ><a href="{{ path('op_trade_billeterie') }}">Billeterie</a></li>
+        {% endblock %}
 
 {% block body %}
 <div class="row">
