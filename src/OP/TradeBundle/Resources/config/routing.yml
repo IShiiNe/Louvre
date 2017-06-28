@@ -3,5 +3,9 @@ op_trade_homepage:
     defaults: { _controller: OPTradeBundle:Default:index }
 
 op_trade_billeterie:
-    path:     /billeterie
-    defaults: { _controller: OPTradeBundle:Default:index }
+    path:     /order/prepare
+    defaults: { _controller: OPTradeBundle:Default:prepare }
+
+op_trade_checkout:
+    path:     /order/checkout
+    defaults: { _controller: OPTradeBundle:Default:checkout }
