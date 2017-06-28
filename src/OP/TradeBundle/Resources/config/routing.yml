@@ -1,0 +1,7 @@
+op_trade_homepage:
+    path:     /
+    defaults: { _controller: OPTradeBundle:Default:index }
+
+op_trade_billeterie:
+    path:     /billeterie
+    defaults: { _controller: OPTradeBundle:Default:index }
