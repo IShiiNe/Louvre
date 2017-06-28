@@ -16,17 +16,15 @@
         <p>
               <h2>Informations</h2>
 
-  {% for flashMessage in app.session.flashbag.all %}
-      {%if type == 'error'%} {% set type = 'danger' %} 
-        <div class="alert alert-{{ type }}">
-            {{ message|raw }}
+  {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
         </div>
-        {%endif%}
-    {%if type == 'success'%} {% set type = 'success' %} 
-        <div class="alert alert-{{ type }}">
-            {{ message|raw }}
+  {% endfor %}
+  {% for flashMessage in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger">
+            {{ flashMessage }}
         </div>
-    {%endif%}
   {% endfor %}
 
   <div class="panel panel-default">
