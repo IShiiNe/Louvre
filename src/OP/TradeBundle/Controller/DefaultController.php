@@ -2,18 +2,42 @@
 
 namespace OP\TradeBundle\Controller;
 
+
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use OP\TradeBundle\Entity\Ticket;
+use OP\TradeBundle\Form\TicketType;
+
+
 
 class DefaultController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('OPTradeBundle:Trade:layout.html.twig');
+        
+
+    return $this->render('OPTradeBundle:Trade:layout.html.twig');
     }
 
     public function prepareAction()
     {
-        return $this->render('OPTradeBundle:Trade:prepare.html.twig');
+        $ticket = new Ticket();
+
+        $form = $this->get('form.factory')->create(TicketType::class, $ticket);
+
+        //if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+        //    $em = $this->getDoctrine()->getManager();
+          //  $em->persist($ticket);
+          //  $em->flush();
+
+         //   $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+
+         //   return $this->redirectToRoute('op_trade_homepage');
+       // }
+
+        return $this->render('OPTradeBundle:Trade:prepare.html.twig', array(
+      'form' => $form->createView()
+    ));
     }
 
     public function checkoutAction()
