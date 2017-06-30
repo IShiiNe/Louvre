@@ -1,4 +1,4 @@
 services:
-#    op_trade.example:
-#        class: OP\TradeBundle\Example
+   op_trade.calculator:
+        class: OP\TradeBundle\Calculator\OPCalculator
 #        arguments: ["@service_id", "plain_value", "%parameter%"]

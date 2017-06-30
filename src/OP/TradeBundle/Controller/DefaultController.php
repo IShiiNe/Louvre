@@ -26,14 +26,12 @@ class DefaultController extends Controller
         $form = $this->get('form.factory')->create(CommandeType::class, $commande);
 
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($commande);
 
-            var_dump($commande);
-            die;
-            $this->addFlash->add('notice', 'Annonce bien enregistrée.');
+            $calculator = $this->container->get('op_trade.calculator');
+            $prix = $calculator->calculate($commande);
+            $_SESSION['commande'] = $commande;
 
-            return $this->redirectToRoute('op_trade_billeterie');
+            return $this->redirectToRoute('op_trade_checkout');
         }
 
         return $this->render('OPTradeBundle:Trade:prepare.html.twig', array(
@@ -43,6 +41,8 @@ class DefaultController extends Controller
 
     public function checkoutAction()
     {
+        var_dump($_SESSION);
+        die;
         return $this->render('OPTradeBundle:Trade:checkout.html.twig');
     }
 
