@@ -5,8 +5,8 @@ namespace OP\TradeBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use OP\TradeBundle\Entity\Ticket;
-use OP\TradeBundle\Form\TicketType;
+use OP\TradeBundle\Entity\Commande;
+use OP\TradeBundle\Form\CommandeType;
 
 
 
@@ -19,21 +19,22 @@ class DefaultController extends Controller
     return $this->render('OPTradeBundle:Trade:layout.html.twig');
     }
 
-    public function prepareAction()
+    public function prepareAction(Request $request)
     {
-        $ticket = new Ticket();
+        $commande = new Commande();
 
-        $form = $this->get('form.factory')->create(TicketType::class, $ticket);
+        $form = $this->get('form.factory')->create(CommandeType::class, $commande);
 
-        //if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-        //    $em = $this->getDoctrine()->getManager();
-          //  $em->persist($ticket);
-          //  $em->flush();
+        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($commande);
 
-         //   $request->getSession()->getFlashBag()->add('notice', 'Annonce bien enregistrée.');
+            var_dump($commande);
+            die;
+            $this->addFlash->add('notice', 'Annonce bien enregistrée.');
 
-         //   return $this->redirectToRoute('op_trade_homepage');
-       // }
+            return $this->redirectToRoute('op_trade_billeterie');
+        }
 
         return $this->render('OPTradeBundle:Trade:prepare.html.twig', array(
       'form' => $form->createView()
@@ -41,6 +42,11 @@ class DefaultController extends Controller
     }
 
     public function checkoutAction()
+    {
+        return $this->render('OPTradeBundle:Trade:checkout.html.twig');
+    }
+
+    public function payAction()
     {
         \Stripe\Stripe::setApiKey("sk_test_VISZ3fQWpHbM62RrrW2aUtQo");
 
@@ -56,12 +62,17 @@ class DefaultController extends Controller
                 "description" => "Paiement Stripe - OpenClassrooms Exemple"
             ));
             $this->addFlash("success","Bravo ça marche !");
-            return $this->redirectToRoute("op_trade_billeterie");
+            return $this->redirectToRoute("op_trade_finish");
         } catch(\Stripe\Error\Card $e) {
 
             $this->addFlash("error","Snif ça marche pas :(");
-            return $this->redirectToRoute("op_trade_billeterie");
+            return $this->redirectToRoute("op_trade_finish");
             // The card has been declined
         }
+    }
+
+    public function finishAction()
+    {
+        return $this->render('OPTradeBundle:Trade:finish.html.twig');
     }
 }

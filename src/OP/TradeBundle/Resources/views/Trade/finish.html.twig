@@ -1,0 +1,22 @@
+{# src/OP/TradeBundle/views/Trade/finish.html.twig #}
+
+{% extends '::Layout.html.twig' %}
+
+{% block current %}
+    <li ><a href="{{ path('op_trade_homepage') }}">Home</a></li>
+    <li class="active"><a href="{{ path('op_trade_billeterie') }}">Billeterie</a></li>
+{% endblock %}
+
+{% block body %}
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+    <div>
+{% endblock %}

@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="ticket")
  * @ORM\Entity(repositoryClass="OP\TradeBundle\Repository\TicketRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Ticket
 {
@@ -43,10 +44,10 @@ class Ticket
     private $reduced;
 
     /**
-     * @var ArrayCollection
-     * @ORM\ManyToOne(targetEntity="OP\TradeBundle\Entity\Commande")
+     * @ORM\ManyToOne(targetEntity="OP\TradeBundle\Entity\Commande", inversedBy="tickets")
+     *
      */
-    protected $commande;
+    private $commande;
 
 
     /**
@@ -130,5 +131,32 @@ class Ticket
     {
         return $this->reduced;
     }
+
+    /**
+     * Set advert
+     *
+     * @param \OP\TradeBundle\Entity\Commande $advert
+     *
+     * @return Ticket
+     */
+    public function setCommande(\OP\TradeBundle\Entity\Commande $commande)
+    {
+        $this->commande = $commande;
+
+        return $this;
+    }
+
+    /**
+     * Get advert
+     *
+     * @return \OP\TradeBundle\Entity\Commande
+     */
+    public function getCommande()
+    {
+        return $this->commande;
+    }
+
+
+
 }
 

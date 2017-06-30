@@ -3,6 +3,8 @@
 namespace OP\TradeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * Commande
@@ -41,6 +43,18 @@ class Commande
      * @ORM\Column(name="visite_date", type="datetime")
      */
     private $visiteDate;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="prix", type="integer")
+     */
+    private $prix;
+
+    /**
+     * @ORM\OneToMany(targetEntity="OP\TradeBundle\Entity\Ticket", mappedBy="commande")
+     */
+    private $tickets;
 
     /**
      * Get id
@@ -123,5 +137,45 @@ class Commande
     {
         return $this->visiteDate;
     }
+
+    /**
+     * Set visiteDate
+     *
+     * @param int $prix
+     *
+     * @return Commande
+     */
+    public function setPrix($prix)
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    /**
+     * Get prix
+     *
+     * @return int prix
+     */
+    public function getPrix()
+    {
+        return $this->prix;
+    }
+
+    public function addTicket(Ticket $ticket)
+    {
+        $this->tickets[] = $ticket;
+    }
+
+    public function removeTicket(Ticket $ticket)
+    {
+        $this->tickets->removeElement($ticket);
+    }
+
+    public function getTickets()
+    {
+        return $this->tickets;
+    }
+
 }
 

@@ -1,0 +1,34 @@
+{# src/OP/TradeBundle/views/Trade/checkout.html.twig #}
+
+{% extends '::Layout.html.twig' %}
+
+{% block current %}
+    <li ><a href="{{ path('op_trade_homepage') }}">Home</a></li>
+    <li class="active"><a href="{{ path('op_trade_billeterie') }}">Billeterie</a></li>
+{% endblock %}
+
+{% block body %}
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('error') %}
+        <div class="alert alert-danger">
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+<form action="{{ path('op_trade_pay') }}" method="POST">
+    <script
+            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="pk_test_sfeOIEn99pPwFZSdFSGsuPlV"
+            data-amount="1000"
+            data-name="Payement"
+            data-description="X billets pour XX.XX€"
+            data-locale="auto"
+            data-currency="eur">
+    </script>
+</form>
+<div>
+{% endblock %}

@@ -9,3 +9,11 @@ op_trade_billeterie:
 op_trade_checkout:
     path:     /order/checkout
     defaults: { _controller: OPTradeBundle:Default:checkout }
+
+op_trade_pay:
+    path:     /order/pay
+    defaults: { _controller: OPTradeBundle:Default:pay }
+
+op_trade_finish:
+    path:     /order/finish
+    defaults: { _controller: OPTradeBundle:Default:finish }
