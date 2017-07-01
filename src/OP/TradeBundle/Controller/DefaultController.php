@@ -95,8 +95,10 @@ class DefaultController extends Controller
             $mail = $_POST['stripeEmail'];
             $commande->setPrix($prix['total']);
             $commande->setMail($mail);
-            var_dump($commande);
-            die;
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($commande);
+            $em->flush();
+
 
             $this->addFlash("success","Bravo ça marche !");
             return $this->redirectToRoute("op_trade_finish");

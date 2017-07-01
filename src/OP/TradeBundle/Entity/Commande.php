@@ -52,9 +52,14 @@ class Commande
     private $prix;
 
     /**
-     * @ORM\OneToMany(targetEntity="OP\TradeBundle\Entity\Ticket", mappedBy="commande")
+     * @ORM\OneToMany(targetEntity="OP\TradeBundle\Entity\Ticket", mappedBy="commande", cascade={"persist"})
      */
     private $tickets;
+
+    public function __construct()
+    {
+        $this->commandeDate = new \Datetime();
+    }
 
     /**
      * Get id

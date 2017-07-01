@@ -17,6 +17,11 @@ class CommandeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('visiteDate', TextType::class, array(
+                'label_attr' => array(
+                    'class' => 'col-sm-2 control-label'),
+                'label' => 'Date de la visite')
+            )
             ->add('tickets', CollectionType::class, array(
                 'entry_type'   => TicketType::class,
                 'allow_add'    => true,

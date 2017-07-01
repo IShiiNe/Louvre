@@ -27,7 +27,7 @@
         </div>
     {% endfor %}
 
-    <div class="panel panel-default">
+    <div class="panel panel-default row">
         <div class="panel-heading">
             <h3 class="panel-title">Horaires :</h3>
         </div>
@@ -40,17 +40,19 @@
             <li class="list-group-item">Samedi   : 09h00-18h00</li>
             <li class="list-group-item"><strong>Dimanche : Fermé</strong></li>
         </ul>
-        <ul>
-            <input id="datepicker" data-provide="datepicker" class="form-control">
-        </ul>
     </div>
 
     <div class="panel panel-default row">
         <div class="panel-heading">
-            <h3 class="panel-title">Tickets :</h3>
+            <h3 class="panel-title">Commande :</h3>
         </div>
-        <ul class="list-group col-sm-offset-1 col-sm-10">
+        <ul class="col-sm-offset-1 col-sm-10">
+            <br>
             {{ form_start(form, {'attr': {'class': 'form'}}) }}
+            {{ form_label(form.visiteDate, "Date de la visite", {'label_attr': {'class': 'col-sm-offset-2 col-sm-2 control-label'}}) }}
+            <div class="col-sm-4">
+            {{ form_widget(form.visiteDate, {'attr': {'class': 'datepicker', 'data-provide': 'datepicker'}}) }}
+            </div><br><br>
             {{ form_widget(form.tickets) }}
             <a href="#" id="add_ticket" class="col-sm-offset-10 btn btn-default">Ajouter un ticket</a>
 
@@ -155,7 +157,8 @@
         });
 
         jQuery(document).ready(function($) {
-            $('#datepicker').datepicker({
+            $('.datepicker').datepicker({
+                format: "dd/mm/yyyy",
                 maxViewMode: 0,
                 language: "fr",
                 daysOfWeekDisabled: "0,2",
