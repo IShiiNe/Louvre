@@ -30,9 +30,9 @@ class Ticket
     private $name;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="date_birth", type="datetime")
+     * @ORM\Column(name="date_birth", type="string", length=255)
      */
     private $dateBirth;
 
@@ -87,7 +87,7 @@ class Ticket
     /**
      * Set dateBirth
      *
-     * @param \DateTime $dateBirth
+     * @param string $dateBirth
      *
      * @return Ticket
      */
@@ -101,7 +101,7 @@ class Ticket
     /**
      * Get dateBirth
      *
-     * @return \DateTime
+     * @return string
      */
     public function getDateBirth()
     {

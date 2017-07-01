@@ -38,9 +38,9 @@ class Commande
     private $commandeDate;
 
     /**
-     * @var \DateTime
+     * @var string
      *
-     * @ORM\Column(name="visite_date", type="datetime")
+     * @ORM\Column(name="visite_date", type="string", length=255)
      */
     private $visiteDate;
 
@@ -117,7 +117,7 @@ class Commande
     /**
      * Set visiteDate
      *
-     * @param \DateTime $visiteDate
+     * @param string $visiteDate
      *
      * @return Commande
      */
@@ -131,7 +131,7 @@ class Commande
     /**
      * Get visiteDate
      *
-     * @return \DateTime
+     * @return string
      */
     public function getVisiteDate()
     {
