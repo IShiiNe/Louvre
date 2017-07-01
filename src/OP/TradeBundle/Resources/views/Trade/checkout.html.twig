@@ -19,16 +19,30 @@
         </div>
     {% endfor %}
 
-<form action="{{ path('op_trade_pay') }}" method="POST">
-    <script
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Liste des billets</h3>
+        </div>
+        <ul class="list-group">
+            {% for ticket in commande.tickets %}
+                <li class="list-group-item"><span class="ticket-number">Ticket {{ loop.index }} :</span> {{ ticket.name }}   <span class="badge">{{ prix['ticket' ~ loop.index]  }} €</span></li>
+            {% endfor %}
+        </ul>
+        <div class="panel-heading">
+            <h3 class="panel-title list-group-item">Prix total : <span class="badge">{{ prix.total }} €</span></h3>
+        </div>
+    </div>
+
+    <form action="{{ path('op_trade_pay') }}" method="POST">
+        <script
             src="https://checkout.stripe.com/checkout.js" class="stripe-button"
             data-key="pk_test_sfeOIEn99pPwFZSdFSGsuPlV"
-            data-amount="1000"
+            data-amount="{{ prix.total }}00"
             data-name="Payement"
-            data-description="X billets pour XX.XX€"
+            data-description="{% for ticket in commande.tickets %}{% if loop.last %}{{ loop.index }}{% endif %} {% endfor %} billets pour {{ prix.total }}.00€"
             data-locale="auto"
             data-currency="eur">
-    </script>
-</form>
+        </script>
+    </form>
 <div>
 {% endblock %}

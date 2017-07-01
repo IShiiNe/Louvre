@@ -3,8 +3,8 @@
 {% extends '::Layout.html.twig' %}
 
 {% block current %}          
-            <li ><a href="{{ path('op_trade_homepage') }}">Home</a></li>
-            <li class="active"><a href="{{ path('op_trade_billeterie') }}">Billeterie</a></li>
+    <li ><a href="{{ path('op_trade_homepage') }}">Home</a></li>
+    <li class="active"><a href="{{ path('op_trade_billeterie') }}">Billeterie</a></li>
 {% endblock %}
 
 {% block body %}
@@ -14,89 +14,87 @@
 
     <div id="row">
         <p>
-              <h2>Informations</h2>
+            <h2>Informations</h2>
 
-  {% for flashMessage in app.session.flashbag.get('success') %}
+    {% for flashMessage in app.session.flashbag.get('success') %}
         <div class="alert alert-success">
             {{ flashMessage }}
         </div>
-  {% endfor %}
-  {% for flashMessage in app.session.flashbag.get('error') %}
+    {% endfor %}
+    {% for flashMessage in app.session.flashbag.get('error') %}
         <div class="alert alert-danger">
             {{ flashMessage }}
         </div>
-  {% endfor %}
+    {% endfor %}
 
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Horaires :</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Horaires :</h3>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item">Lundi    : 09h00-18h00</li>
+            <li class="list-group-item"><strong>Mardi    : Fermé</strong></li>
+            <li class="list-group-item">Mercredi : 09h00-22h00</li>
+            <li class="list-group-item">Jeudi    : 09h00-18h00</li>
+            <li class="list-group-item">Vendredi : 09h00-22h00</li>
+            <li class="list-group-item">Samedi   : 09h00-18h00</li>
+            <li class="list-group-item"><strong>Dimanche : Fermé</strong></li>
+        </ul>
+        <ul>
+            <input id="datepicker" data-provide="datepicker" class="form-control">
+        </ul>
     </div>
-    <ul class="list-group">
-      <li class="list-group-item">Lundi    : 09h00-18h00</li>
-      <li class="list-group-item"><strong>Mardi    : Fermé</strong></li>
-      <li class="list-group-item">Mercredi : 09h00-22h00</li>
-      <li class="list-group-item">Jeudi    : 09h00-18h00</li>
-      <li class="list-group-item">Vendredi : 09h00-22h00</li>
-      <li class="list-group-item">Samedi   : 09h00-18h00</li>
-      <li class="list-group-item">Dimanche : 09h00-18h00</li>
-    </ul>
-  </div>
 
-  <div class="panel panel-default row">
-    <div class="panel-heading">
-      <h3 class="panel-title">Tickets :</h3>
+    <div class="panel panel-default row">
+        <div class="panel-heading">
+            <h3 class="panel-title">Tickets :</h3>
+        </div>
+        <ul class="list-group col-sm-offset-1 col-sm-10">
+            {{ form_start(form, {'attr': {'class': 'form'}}) }}
+            {{ form_widget(form.tickets) }}
+            <a href="#" id="add_ticket" class="col-sm-offset-10 btn btn-default">Ajouter un ticket</a>
+
+        </ul>
     </div>
-    <ul class="list-group col-sm-offset-1 col-sm-10">
-        {{ form_start(form, {'attr': {'class': 'form'}}) }}
-        {{ form_widget(form.tickets) }}
-        <a href="#" id="add_ticket" class="col-sm-offset-10 btn btn-default">Ajouter un ticket</a>
-
-    </ul>
-  </div>
         {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
         {{ form_end(form) }}
 
-  <!-- Modal -->
-<div id="modal-price" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+    <!-- Modal -->
+    <div id="modal-price" class="modal fade" role="dialog">
+        <div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Conditions et justificatis tarif réduit :</h4>
-      </div>
-      <div class="modal-body">
-          <p>Le billet tarif réduit est appliqué sous certaines conditions, à savoir les statuts suivant sont éligibles* à cette réduction : employé du musée, d’un service du Ministère de la Culture, militaire, étudiant, chercheur d'emploi...</p>
-          <small>* Sous réserve de présenter le justificatif adéqute (carte d'étudiant, statut pôle emploi, etc...).</small>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-      </div>
-    </div>
+            <!-- Modal content-->
+            <div class="modal-content">
+                  <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Conditions et justificatis tarif réduit :</h4>
+                  </div>
+                  <div class="modal-body">
+                      <p>Le billet tarif réduit est appliqué sous certaines conditions, à savoir les statuts suivant sont éligibles* à cette réduction : employé du musée, d’un service du Ministère de la Culture, militaire, étudiant, chercheur d'emploi...</p>
+                      <small>* Sous réserve de présenter le justificatif adéqute (carte d'étudiant, statut pôle emploi, etc...).</small>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                  </div>
+            </div>
 
-  </div>
-</div>
+          </div>
+        </div>
 
         </p>
     </div>
 <div>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
     <script type="text/javascript">
-            jQuery(document).ready(function (){
-                jQuery('.price_3').append(' - <a href="#" alt="plus d\'infos" data-toggle="modal" data-target="#modal-price">plus d\'informations</a>');
-            })
-
-        $(document).ready(function() {
+        var $k = jQuery.noConflict();
+        $k(document).ready(function() {
             // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
-            var $container = $('div#commande_tickets');
+            var $container = $k('div#commande_tickets');
 
             // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
             var index = $container.find(':input').length;
 
             // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
-            $('#add_ticket').click(function(e) {
+            $k('#add_ticket').click(function(e) {
                 addTicket($container);
 
                 e.preventDefault(); // évite qu'un # apparaisse dans l'URL
@@ -109,7 +107,7 @@
             } else {
                 // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
                 $container.children('div').each(function() {
-                    addDeleteLink($(this));
+                    addDeleteLink($k(this));
                 });
             }
 
@@ -124,7 +122,7 @@
                 ;
 
                 // On crée un objet jquery qui contient ce template
-                var $prototype = $(template);
+                var $prototype = $k(template);
 
                 // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
                 addDeleteLink($prototype);
@@ -139,7 +137,7 @@
             // La fonction qui ajoute un lien de suppression d'une catégorie
             function addDeleteLink($prototype) {
                 // Création du lien
-                var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+                var $deleteLink = $k('<a href="#" class="btn btn-danger">Supprimer</a>');
 
                 // Ajout du lien
                 $prototype.append($deleteLink);
@@ -152,10 +150,25 @@
                     return false;
                 });
             }
+
+
+        });
+
+        jQuery(document).ready(function($) {
+            $('#datepicker').datepicker({
+                maxViewMode: 0,
+                language: "fr",
+                daysOfWeekDisabled: "0,2",
+                todayHighlight: true,
+                startDate: new Date()
+            });
+        });
+
+        jQuery(document).ready(function (){
+            jQuery('.price_3').append(' - <a href="#" alt="plus d\'infos" data-toggle="modal" data-target="#modal-price">plus d\'informations</a>');
         });
     </script>
 {% endblock %}
 
 {% block stylesheets %}
-
 {% endblock %}
