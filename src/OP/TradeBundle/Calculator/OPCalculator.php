@@ -33,21 +33,24 @@ class OPCalculator
             $interval = $dateNaissance->diff($dateActuel);
             $age = $interval->format('%Y');
 
-            if (intval($age) >= '16' && intval($age) < '60' && !$ticket->getReduced() ) {
-                $prix[] = array('ticket '.$numero => '16');
+            if (intval($age) >= 12 && intval($age) < 60 && !$ticket->getReduced() ) {
+                $prix['ticket'.$numero] = 16;
                 $total += 16;
-            }elseif (intval($age) <= '4') {
-                $prix[] = array('ticket '.$numero => '0');
+            }elseif (intval($age) <= 4) {
+                $prix['ticket'.$numero] = 0;
                 $total += 0;
             }elseif ($ticket->getReduced()) {
-                $prix[] = array('ticket '.$numero => '10');
-                $total += 0;
-            }else {
-                $prix[] = array('ticket '.$numero => '12');
+                $prix['ticket'.$numero] = 10;
+                $total += 10;
+            }elseif (intval($age) >= 60) {
+                $prix['ticket'.$numero] = 12;
                 $total += 12;
+            }else {
+                $prix['ticket'.$numero] = 8;
+                $total += 8;
             }
         }
-        $prix[] = array('total' => $total);
+        $prix['total'] = $total;
         return $prix;
     }
 }
