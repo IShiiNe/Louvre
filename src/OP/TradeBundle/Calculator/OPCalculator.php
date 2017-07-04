@@ -23,8 +23,10 @@ class OPCalculator
     {
         $total = 0;
         $numero = 0;
-        $dateActuel = new \DateTime();
+        $dateActuel = $commande->getCommandeDate();
         $tickets = $commande->getTickets();
+
+
         foreach ($tickets as $ticket) {
             $numero ++;
             $birthdayDate = date("Y-m-d", strtotime($ticket->getDateBirth()));
@@ -51,6 +53,18 @@ class OPCalculator
             }
         }
         $prix['total'] = $total;
+
+
+        $visiteDate = str_replace("/", "-", $commande->getVisiteDate());
+        $visiteDate = date("Y-m-d", strtotime($visiteDate));
+        $visiteDate = new \DateTime($visiteDate);
+        $interval = $dateActuel->diff($visiteDate);
+
+        if ($interval->format('%Y') == 0 && $interval->format('%m') == 0 && $interval->format('%d') == 0 && $interval->format('%R%h') <= -12) {
+            $demiJournee = true;
+            $commande->setDemiJournee($demiJournee);
+        }
+
         return $prix;
     }
 }

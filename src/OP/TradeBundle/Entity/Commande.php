@@ -52,6 +52,13 @@ class Commande
     private $prix;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="demi_journee", type="boolean")
+     */
+    private $demiJournee;
+
+    /**
      * @ORM\OneToMany(targetEntity="OP\TradeBundle\Entity\Ticket", mappedBy="commande", cascade={"persist"})
      */
     private $tickets;
@@ -165,6 +172,30 @@ class Commande
     public function getPrix()
     {
         return $this->prix;
+    }
+
+    /**
+     * Set demiJournee
+     *
+     * @param boolean $demiJournee
+     *
+     * @return Commande
+     */
+    public function setDemiJournee($demiJournee)
+    {
+        $this->demiJournee = $demiJournee;
+
+        return $this;
+    }
+
+    /**
+     * Get demiJournee
+     *
+     * @return bool
+     */
+    public function getDemiJournee()
+    {
+        return $this->demiJournee;
     }
 
     public function addTicket(Ticket $ticket)
