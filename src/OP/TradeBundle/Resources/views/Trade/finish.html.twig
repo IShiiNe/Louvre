@@ -18,5 +18,13 @@
             {{ flashMessage }}
         </div>
     {% endfor %}
+    {% if valider is defined %}
+        <h3>Votre Commande à bien été enregistrée !</h3>
+        <p>Merci pour votre commande ! Nous venons de vous envoyer une confirmation de commande par e-mail, incluant vos billets. </p>
+    {% endif %}
+    {% if vider is defined %}
+        <h3>Votre Panier à bien été vidée !</h3>
+        <p>Merci de votre visite.</p>
+    {% endif %}
     <div>
 {% endblock %}

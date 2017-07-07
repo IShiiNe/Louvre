@@ -4,6 +4,8 @@ namespace OP\TradeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use OP\TradeBundle\Entity\Ticket;
+use OP\TradeBundle\OPTradeBundle;
 
 
 /**
@@ -59,6 +61,8 @@ class Commande
     private $demiJournee;
 
     /**
+     * @var ArrayCollection $tickets
+     *
      * @ORM\OneToMany(targetEntity="OP\TradeBundle\Entity\Ticket", mappedBy="commande", cascade={"persist"})
      */
     private $tickets;
@@ -66,6 +70,7 @@ class Commande
     public function __construct()
     {
         $this->commandeDate = new \Datetime();
+        $this->tickets = new ArrayCollection();
     }
 
     /**
@@ -198,16 +203,37 @@ class Commande
         return $this->demiJournee;
     }
 
+    /**
+     * Add ticket
+     *
+     * @param \OP\TradeBundle\Entity\Ticket $ticket
+     *
+     * @return Commande
+     */
     public function addTicket(Ticket $ticket)
     {
         $this->tickets[] = $ticket;
+        $ticket->setCommande($this);
+
+        return $this;
     }
 
+    /**
+     * Remove ticket
+     *
+     * @param \OP\TradeBundle\Entity\Ticket $ticket
+     *
+     */
     public function removeTicket(Ticket $ticket)
     {
         $this->tickets->removeElement($ticket);
     }
 
+    /**
+     * Get Tickets
+     *
+     * @return object
+     */
     public function getTickets()
     {
         return $this->tickets;

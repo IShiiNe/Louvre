@@ -1,4 +1,16 @@
 services:
    op_trade.calculator:
         class: OP\TradeBundle\Calculator\OPCalculator
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+        arguments: ["@doctrine.orm.entity_manager"]
+
+   op_trade.trade:
+           class: OP\TradeBundle\Trade\OPTrade
+           arguments:
+                    - "%stripe_key%"
+                    - "@doctrine.orm.entity_manager"
+
+   op_trade.mail:
+           class: OP\TradeBundle\Mail\OPMail
+           arguments:
+                    - "@mailer"
+                    - "@templating"

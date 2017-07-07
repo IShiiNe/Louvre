@@ -9,14 +9,23 @@
 namespace OP\TradeBundle\Calculator;
 
 use OP\TradeBundle\Entity\Commande;
+use Doctrine\ORM\EntityManager;
+
 
 
 class OPCalculator
 {
+    private $em = null;
+
+    public function __construct(EntityManager $em) {
+        $this->em = $em;
+    }
+
     /**
      * Détermine le prix de chaque ticket et donne son total
      *
      * @param object $commande
+     *
      * @return array
      */
     public function Calculate(Commande $commande)
@@ -25,7 +34,6 @@ class OPCalculator
         $numero = 0;
         $dateActuel = $commande->getCommandeDate();
         $tickets = $commande->getTickets();
-
 
         foreach ($tickets as $ticket) {
             $numero ++;
@@ -52,19 +60,21 @@ class OPCalculator
                 $total += 8;
             }
         }
+
         $prix['total'] = $total;
 
-
-        $visiteDate = str_replace("/", "-", $commande->getVisiteDate());
-        $visiteDate = date("Y-m-d", strtotime($visiteDate));
-        $visiteDate = new \DateTime($visiteDate);
-        $interval = $dateActuel->diff($visiteDate);
+        $interval = $dateActuel->diff( new \DateTime(date("Y-m-d", strtotime(str_replace("/", "-", $commande->getVisiteDate())))));
 
         if ($interval->format('%Y') == 0 && $interval->format('%m') == 0 && $interval->format('%d') == 0 && $interval->format('%R%h') <= -12) {
             $demiJournee = true;
             $commande->setDemiJournee($demiJournee);
+        }else {
+            $demiJournee = false;
+            $commande->setDemiJournee($demiJournee);
         }
+
 
         return $prix;
     }
+
 }

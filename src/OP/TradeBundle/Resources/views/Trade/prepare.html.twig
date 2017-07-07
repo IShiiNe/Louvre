@@ -9,88 +9,106 @@
 
 {% block body %}
     <div id="row">
-        <h1><span>Billets disponible</span></h1>
-    </div>
-
-    <div id="row">
-        <p>
-            <h2>Informations</h2>
-
-    {% for flashMessage in app.session.flashbag.get('success') %}
-        <div class="alert alert-success">
-            {{ flashMessage }}
-        </div>
-    {% endfor %}
-    {% for flashMessage in app.session.flashbag.get('error') %}
-        <div class="alert alert-danger">
-            {{ flashMessage }}
-        </div>
-    {% endfor %}
-
-    <div class="panel panel-default row">
-        <div class="panel-heading">
-            <h3 class="panel-title">Horaires :</h3>
-        </div>
-        <ul class="list-group">
-            <li class="list-group-item">Lundi    : 09h00-18h00</li>
-            <li class="list-group-item"><strong>Mardi    : Fermé</strong></li>
-            <li class="list-group-item">Mercredi : 09h00-22h00</li>
-            <li class="list-group-item">Jeudi    : 09h00-18h00</li>
-            <li class="list-group-item">Vendredi : 09h00-22h00</li>
-            <li class="list-group-item">Samedi   : 09h00-18h00</li>
-            <li class="list-group-item"><strong>Dimanche : Fermé</strong></li>
-        </ul>
-    </div>
-
-    <div class="panel panel-default row">
-        <div class="panel-heading">
-            <h3 class="panel-title">Commande :</h3>
-        </div>
-        <ul class="col-sm-offset-1 col-sm-10">
-            <br>
-            {{ form_start(form, {'attr': {'class': 'form'}}) }}
-            {{ form_label(form.visiteDate, "Date de la visite", {'label_attr': {'class': 'col-sm-offset-2 col-sm-2 control-label'}}) }}
-            <div class="col-sm-4">
-            {{ form_widget(form.visiteDate, {'attr': {'class': 'datepicker', 'data-provide': 'datepicker'}}) }}
-            </div><br><br>
-            {{ form_widget(form.tickets) }}
-            <a href="#" id="add_ticket" class="col-sm-offset-10 btn btn-default">Ajouter un ticket</a>
-
-        </ul>
-    </div>
-        {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
-        {{ form_end(form) }}
-
-    <!-- Modal -->
-    <div id="modal-price" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                  <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Conditions et justificatis tarif réduit :</h4>
-                  </div>
-                  <div class="modal-body">
-                      <p>Le billet tarif réduit est appliqué sous certaines conditions, à savoir les statuts suivant sont éligibles* à cette réduction : employé du musée, d’un service du Ministère de la Culture, militaire, étudiant, chercheur d'emploi...</p>
-                      <small>* Sous réserve de présenter le justificatif adéqute (carte d'étudiant, statut pôle emploi, etc...).</small>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                  </div>
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
             </div>
-
-          </div>
-        </div>
-
-        </p>
+        {% endfor %}
+        {% for flashMessage in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
     </div>
+
+    <div class="row" >
+        <div class="col-sm-5">
+            <div class="panel panel-default" style="padding: 0;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Horaires :</h3>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item">Lundi    : 09h00-18h00</li>
+                    <li class="list-group-item"><strong>Mardi    : Fermé</strong></li>
+                    <li class="list-group-item">Mercredi : 09h00-22h00</li>
+                    <li class="list-group-item">Jeudi    : 09h00-18h00</li>
+                    <li class="list-group-item">Vendredi : 09h00-22h00</li>
+                    <li class="list-group-item">Samedi   : 09h00-18h00</li>
+                    <li class="list-group-item"><strong>Dimanche : Fermé</strong></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-5 col-sm-offset-2">
+            <div class="panel panel-default " style="padding: 0;">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Tarifs :</h3>
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item">Tarifs normal (à partir de 12ans)   : 16€</li>
+                    <li class="list-group-item">Tarifs senoir (à partir de 60ans)   : 12€</li>
+                    <li class="list-group-item">Tarifs enfant (à partir de 4ans*) : 8€</li>
+                    <li class="list-group-item">Tarifs réduit (sous certaines conditions**)    : 10€</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Commande :</h3>
+            </div>
+            <ul class="list-group-item">
+                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                <div class="form-group">
+                {{ form_label(form.visiteDate, "Date de la visite", {'label_attr': {'class': 'col-sm-offset-2 col-sm-2 control-label'}}) }}
+                <span>Billets disponible pour ce jour : <span id="nombre"></span></span>
+                <div class="col-sm-4">
+                    {{ form_widget(form.visiteDate, {'attr': {'class': 'datepicker', 'data-provide': 'datepicker', 'oninput': 'myFunction()'}}) }}
+                </div></div>
+                <script>
+
+                </script>
+                {{ form_widget(form.tickets) }}
+                <a href="#" id="add_ticket" class="col-sm-offset-10 btn btn-default">Ajouter un ticket</a>
+                {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}, 'label': 'Commander'}) }}
+                {{ form_end(form) }}
+            </ul>
+        </div>
+    </div>
+
+    </div>
+    <br><br>
+    <em>*L'entrée est gratuite pour les enfants de moins de 4ans.</em><br>
+    <em>**Sous réserve de présenter le justificatif adéquate (carte d'étudiant, statut pôle emploi, etc...).</em>
 <div>
     <script type="text/javascript">
         var $k = jQuery.noConflict();
         $k(document).ready(function() {
+
+            $k('#commande_visiteDate').blur(function() {
+                myFunction();
+            });
+
+            function myFunction() {
+                var date = document.getElementById("commande_visiteDate");
+                var places = 1000;
+                {% for dispo in dispos %}
+                if (date.value == "{{ dispo.date }}") {
+                    var dispo = {{ dispo.nombre }};
+                    places = places - dispo;
+                    document.getElementById("nombre").innerHTML = places;
+                }else {
+                    document.getElementById("nombre").innerHTML = "";
+                }
+                {% endfor %}
+            }
+
+
             // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
             var $container = $k('div#commande_tickets');
+
 
             // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
             var index = $container.find(':input').length;
@@ -154,7 +172,10 @@
             }
 
 
+
         });
+
+
 
         jQuery(document).ready(function($) {
             $('.datepicker').datepicker({
@@ -165,10 +186,6 @@
                 todayHighlight: true,
                 startDate: new Date()
             });
-        });
-
-        jQuery(document).ready(function (){
-            jQuery('.price_3').append(' - <a href="#" alt="plus d\'infos" data-toggle="modal" data-target="#modal-price">plus d\'informations</a>');
         });
     </script>
 {% endblock %}

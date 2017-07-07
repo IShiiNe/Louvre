@@ -3,6 +3,7 @@
 namespace OP\TradeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use OP\TradeBundle\Entity\Commande;
 
 /**
  * Ticket
@@ -44,8 +45,15 @@ class Ticket
     private $reduced;
 
     /**
-     * @ORM\ManyToOne(targetEntity="OP\TradeBundle\Entity\Commande", inversedBy="tickets")
+     * @var string
      *
+     * @ORM\Column(name="country", type="string", length=255)
+     */
+    private $country;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="OP\TradeBundle\Entity\Commande", inversedBy="tickets")
+     * @ORM\JoinColumn()
      */
     private $commande;
 
@@ -133,9 +141,33 @@ class Ticket
     }
 
     /**
-     * Set advert
+     * Set country
      *
-     * @param \OP\TradeBundle\Entity\Commande $advert
+     * @param string $country
+     *
+     * @return Ticket
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Set commande
+     *
+     * @param \OP\TradeBundle\Entity\Commande $commande
      *
      * @return Ticket
      */
@@ -143,11 +175,12 @@ class Ticket
     {
         $this->commande = $commande;
 
+
         return $this;
     }
 
     /**
-     * Get advert
+     * Get commande
      *
      * @return \OP\TradeBundle\Entity\Commande
      */
