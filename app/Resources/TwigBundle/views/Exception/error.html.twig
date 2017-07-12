@@ -1,0 +1,15 @@
+{# src/OP/TradeBundle/views/Trade/error.html.twig #}
+
+{% extends '::Layout.html.twig' %}
+
+{% block current %}
+    <li ><a href="{{ path('op_trade_homepage') }}">Home</a></li>
+    <li ><a href="{{ path('op_trade_billeterie') }}">Billeterie</a></li>
+{% endblock %}
+
+{% block body %}
+    <div class="col-sm-offset-2 col-sm-8">
+        <h1>Whoops... <small>{{ exception.message }}</small></h1>
+        <p>Veuillez contacter le louvre si le problème persiste</p>
+    </div>
+{% endblock %}
