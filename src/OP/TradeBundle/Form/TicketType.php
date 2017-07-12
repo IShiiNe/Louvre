@@ -18,8 +18,10 @@ class TicketType extends AbstractType
       ->add('name',     TextType::class, array(
                                         'label_attr' => array(
                                                 'class' => 'col-sm-2 control-label'),
-                                        'label' => 'Nom et prénom')
-                                        )
+                                        'label' => 'Nom et prénom',
+                                        'attr' => array(
+                                                'class' => 'name'),
+                                        ))
       ->add('country', CountryType::class, array(
                                         'preferred_choices' => array("FR"),
                                         'label_attr' => array(

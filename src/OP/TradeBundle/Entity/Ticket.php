@@ -4,6 +4,9 @@ namespace OP\TradeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use OP\TradeBundle\Entity\Commande;
+use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 /**
  * Ticket
@@ -27,6 +30,12 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="Name", type="string", length=255)
+     * @Assert\Regex(
+     *     pattern="/[A-Z]/",
+     *     match=false,
+     *     message="Votre date de naissance de doit pas contenir de caractères"
+     * )
+     *
      */
     private $name;
 
@@ -34,6 +43,11 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="date_birth", type="string", length=255)
+     * @Assert\Regex(
+     *     pattern="/[A-Z]/",
+     *     match=false,
+     *     message="Votre date de naissance de doit pas contenir de caractères"
+     * )
      */
     private $dateBirth;
 
@@ -48,6 +62,11 @@ class Ticket
      * @var string
      *
      * @ORM\Column(name="country", type="string", length=255)
+     * @Assert\Regex(
+     *     pattern="/\d/",
+     *     match=false,
+     *     message="Votre pays de doit pas contenir de chiffre"
+     * )
      */
     private $country;
 

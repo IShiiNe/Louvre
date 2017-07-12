@@ -16,7 +16,6 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $session = $this->get('session');
-
         if ($session->has('commande')) {
             $commande = $session->get('commande');
 
@@ -39,8 +38,20 @@ class DefaultController extends Controller
 
 
         $form = $this->get('form.factory')->create(CommandeType::class, $commande);
+        $form->handleRequest($request);
+        if ($request->isMethod('POST') && $form->isValid()) {
+            $validator = $this->get('validator');
+            $listErrors = $validator->validate($commande);
+            if(count($listErrors) > 0) {
+                return new Response((string) $listErrors);
+            }
 
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
+            $dispo = $this->getDoctrine()->getManager()->getRepository('OPTradeBundle:Dispo')->findOneBy(array('date' => $commande->getVisiteDate()));
+            if (!$dispo == null) {
+                if ( 1000 - $dispo->getNombre() <= 0 ) {
+                    $this->addFlash("error","Aucune place disponible pour ce jour-ci !");
+                    return $this->redirectToRoute("op_trade_billeterie");
+            }}
             $session->set('commande', $commande);
             return $this->redirectToRoute('op_trade_checkout');
         }
@@ -88,8 +99,10 @@ class DefaultController extends Controller
         $calculator = $this->container->get('op_trade.calculator');
         $prix = $calculator->calculate($commande);
         $total = $prix['total'] * 100 ;
+        $uniqid = uniqid();
         $commande->setPrix($prix['total']);
         $commande->setMail($_POST['stripeEmail']);
+        $commande->setUniqid($uniqid);
 
         $trade =  $this->container->get('op_trade.trade');
 
@@ -102,7 +115,7 @@ class DefaultController extends Controller
             $trade->dispo($commande);
 
             $mail =  $this->container->get('op_trade.mail');
-            $mail->sendCommandeSuccess($commande);
+            $mail->sendCommandeSuccess($commande, $prix);
 
 
             $session->set('finish', "ok");

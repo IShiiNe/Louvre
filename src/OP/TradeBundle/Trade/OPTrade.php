@@ -33,8 +33,17 @@ class OPTrade
             'source'      => $token,
             'description' => 'Paiement billet visite louvre',
         ));
+
+
         $this->em->persist($commande);
         $this->em->flush();
+
+        foreach ($commande->getTickets() as $ticket) {
+            $ticket->setCommande($commande);
+            $this->em->persist($ticket);
+        }
+        $this->em->flush();
+
     }
 
     /**

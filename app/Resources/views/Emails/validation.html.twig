@@ -1,0 +1,17 @@
+{# app/Resources/views/Emails/validation.html.twig #}
+<img  src="http://i.imgur.com/nAQibIh.png" >
+<h3>Merci d'avoir commandé sur notre site</h3>
+
+<p>Commande {{ commande.id }}{{ commande.uniqid }} du {{ commande.commandeDate|date('d/m/Y') }} {% if commande.demiJournee == true%}<strong>Billet(s) demi-journée </strong>{% endif %}</p>
+
+<p>Vous retrouverez vos billets ci-dessous :</p>
+
+{% for ticket in commande.tickets %}
+    <p><span class="ticket-number">Ticket {{ loop.index }} :</span> {{ ticket.name }}  <span>{{ prix['ticket' ~ loop.index]  }} €</span></p>
+{% endfor %}
+
+<p>
+Louvre <br>
+Adresse : Rue de Rivoli, 75001 Paris <br>
+Téléphone : 01 40 20 50 50 <br>
+</p>

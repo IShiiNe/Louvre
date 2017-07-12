@@ -62,7 +62,7 @@
             <ul class="list-group-item">
                 {{ form_start(form, {'attr': {'class': 'form'}}) }}
                 <div class="form-group">
-                {{ form_label(form.visiteDate, "Date de la visite", {'label_attr': {'class': 'col-sm-offset-2 col-sm-2 control-label'}}) }}
+                {{ form_label(form.visiteDate, "Date de la visite***", {'label_attr': {'class': 'col-sm-offset-2 col-sm-2 control-label'}}) }}
                 <span>Billets disponible pour ce jour : <span id="nombre"></span></span>
                 <div class="col-sm-4">
                     {{ form_widget(form.visiteDate, {'attr': {'class': 'datepicker', 'data-provide': 'datepicker', 'oninput': 'myFunction()'}}) }}
@@ -81,28 +81,43 @@
     </div>
     <br><br>
     <em>*L'entrée est gratuite pour les enfants de moins de 4ans.</em><br>
-    <em>**Sous réserve de présenter le justificatif adéquate (carte d'étudiant, statut pôle emploi, etc...).</em>
+    <em>**Sous réserve de présenter le justificatif adéquate (carte d'étudiant, statut pôle emploi, etc...).</em><br>
+    <em>***On peut commander un billet pour le jour même mais vous commanderez un billet "demi-journée" une fois 14h00 passées.</em>
 <div>
     <script type="text/javascript">
         var $k = jQuery.noConflict();
         $k(document).ready(function() {
 
             $k('#commande_visiteDate').blur(function() {
-                myFunction();
+                visiteDate();
             });
 
-            function myFunction() {
+            var form = document.querySelector("form");
+            form.addEventListener("submit", function (e) {
+                var regex = /\d/;
+                var error = "";
+                [].forEach.call(document.getElementsByClassName('name form-control'), function(v,i,a) {
+                    if (regex.test(v.value)) {
+                        error = "Votre nom ne peux pas contenir de chiffre";
+                        alert(error);
+                        e.preventDefault();
+                    }
+                });
+            });
+
+
+            function visiteDate() {
                 var date = document.getElementById("commande_visiteDate");
                 var places = 1000;
-                {% for dispo in dispos %}
-                if (date.value == "{{ dispo.date }}") {
+                if (date.value == "") {
+                    document.getElementById("nombre").innerHTML = "";
+                } {% for dispo in dispos %}else if (date.value == "{{ dispo.date }}") {
                     var dispo = {{ dispo.nombre }};
                     places = places - dispo;
                     document.getElementById("nombre").innerHTML = places;
-                }else {
-                    document.getElementById("nombre").innerHTML = "";
+                } {% endfor %}else {
+                    document.getElementById("nombre").innerHTML = 1000;
                 }
-                {% endfor %}
             }
 
 
@@ -184,7 +199,7 @@
                 language: "fr",
                 daysOfWeekDisabled: "0,2",
                 todayHighlight: true,
-                startDate: new Date()
+                startDate: new Date(),
             });
         });
     </script>

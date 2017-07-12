@@ -1,0 +1,70 @@
+{# app/Resources/views/layout.html.twig #}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="apple-touch-icon" type="image/png" href="{{ asset('apple-touch-icon.png') }}">
+  <link rel="apple-touch-icon-precomposed" type="image/png" href="{{ asset('apple-touch-icon.png') }}">
+  <title>{% block title %}{% endblock %}</title>
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.0/css/bootstrap-datepicker.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.0/js/bootstrap-datepicker.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.0/locales/bootstrap-datepicker.fr.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+  {% block stylesheets %}
+  {% endblock %}
+</head>
+
+<body>
+  <div class="container">
+    <nav class="navbar navbar-default navbar-inverse">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ path('op_trade_homepage') }}"><img  src="http://i.imgur.com/pOYyeAP.png" ></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+          {% block current %}{% endblock %}
+          </ul>
+          {% if commande is defined %}
+          <ul class="nav navbar-nav navbar-right">
+               <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Panier <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ path('op_trade_finish') }}">Vider</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{{ path('op_trade_checkout') }}">Payer</a></li>
+                    </ul>
+               </li>
+          </ul>{% endif %}
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    {% block body %}{% endblock %}
+  </div>
+  <div class="row">
+      <br>
+    <footer style="border-top: 1px solid #ccc; padding-top: 10px; text-align: center;">
+      <p>ShiNe © créer avec Symfony. Louvre {{ 'now'|date('Y') }}</p>
+    </footer>
+  </div>
+</div>
+{% block javascripts %}
+  {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
+{% endblock %}
+
+</body>
+</html>

@@ -6,13 +6,15 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use OP\TradeBundle\Entity\Ticket;
 use OP\TradeBundle\OPTradeBundle;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Commande
  *
  * @ORM\Table(name="commande")
  * @ORM\Entity(repositoryClass="OP\TradeBundle\Repository\CommandeRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Commande
 {
@@ -29,6 +31,9 @@ class Commande
      * @var string
      *
      * @ORM\Column(name="mail", type="string", length=255)
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/"
+     * )
      */
     private $mail;
 
@@ -36,6 +41,7 @@ class Commande
      * @var \DateTime
      *
      * @ORM\Column(name="commande_date", type="datetime")
+     * @Assert\DateTime()
      */
     private $commandeDate;
 
@@ -43,6 +49,11 @@ class Commande
      * @var string
      *
      * @ORM\Column(name="visite_date", type="string", length=255)
+     * @Assert\Regex(
+     *     pattern="/[A-Z]/",
+     *     match=false,
+     *     message="Votre date de naissance de doit pas contenir de caractères"
+     * )
      */
     private $visiteDate;
 
@@ -59,6 +70,14 @@ class Commande
      * @ORM\Column(name="demi_journee", type="boolean")
      */
     private $demiJournee;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="uniqid", type="string", length=255)
+     *
+     */
+    private $uniqid;
 
     /**
      * @var ArrayCollection $tickets
@@ -201,6 +220,30 @@ class Commande
     public function getDemiJournee()
     {
         return $this->demiJournee;
+    }
+
+    /**
+     * Set uniqid
+     *
+     * @param string $uniqid
+     *
+     * @return Commande
+     */
+    public function setUniqid($uniqid)
+    {
+        $this->uniqid = $uniqid;
+
+        return $this;
+    }
+
+    /**
+     * Get uniqid
+     *
+     * @return string
+     */
+    public function getUniqid()
+    {
+        return $this->uniqid;
     }
 
     /**

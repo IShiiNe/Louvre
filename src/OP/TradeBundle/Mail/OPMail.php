@@ -41,12 +41,12 @@ class OPMail
         $this->mailer->send($mail);
     }
 
-    public function sendCommandeSuccess(Commande $commande)
+    public function sendCommandeSuccess(Commande $commande, $prix)
     {
         $subject = "Louvre : Votre visite du ".$commande->getVisiteDate();
         $template = 'Emails/validation.html.twig';
         $to = $commande->getMail();
-        $body = $this->templating->render($template, array('commande' => $commande));
+        $body = $this->templating->render($template, array('commande' => $commande, "prix" => $prix));
         $this->sendMessage($to, $subject, $body);
     }
 }
