@@ -9,18 +9,11 @@
 namespace OP\TradeBundle\Calculator;
 
 use OP\TradeBundle\Entity\Commande;
-use Doctrine\ORM\EntityManager;
 
 
 
 class OPCalculator
 {
-    private $em = null;
-
-    public function __construct(EntityManager $em) {
-        $this->em = $em;
-    }
-
     /**
      * Détermine le prix de chaque ticket et donne son total
      *
@@ -28,7 +21,7 @@ class OPCalculator
      *
      * @return array
      */
-    public function Calculate(Commande $commande)
+    public function calculate(Commande $commande)
     {
         $total = 0;
         $numero = 0;
@@ -76,5 +69,4 @@ class OPCalculator
 
         return $prix;
     }
-
 }

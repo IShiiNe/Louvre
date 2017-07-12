@@ -1,5 +1,6 @@
 {
-    "name": "raphal/louvre",
+    "name": "raphael/louvre",
+    "description": "Billetterie du musée du Louvre",
     "license": "proprietary",
     "type": "project",
     "autoload": {

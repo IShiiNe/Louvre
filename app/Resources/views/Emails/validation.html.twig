@@ -2,7 +2,7 @@
 <img  src="http://i.imgur.com/nAQibIh.png" >
 <h3>Merci d'avoir commandé sur notre site</h3>
 
-<p>Commande {{ commande.id }}{{ commande.uniqid }} du {{ commande.commandeDate|date('d/m/Y') }} {% if commande.demiJournee == true%}<strong>Billet(s) demi-journée </strong>{% endif %}</p>
+<p>Commande {{ commande.uniqid }} du {{ commande.commandeDate|date('d/m/Y') }} {% if commande.demiJournee == true%}<strong>Billet(s) demi-journée </strong>{% endif %}</p>
 
 <p>Vous retrouverez vos billets ci-dessous :</p>
 

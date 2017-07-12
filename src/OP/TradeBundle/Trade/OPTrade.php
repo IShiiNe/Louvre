@@ -25,7 +25,7 @@ class OPTrade
     }
 
 
-    public function Payment(Commande $commande, $token, $total)
+    public function payment(Commande $commande, $token, $total)
     {
         \Stripe\Charge::create(array(
             'amount'      => $total,
@@ -33,8 +33,12 @@ class OPTrade
             'source'      => $token,
             'description' => 'Paiement billet visite louvre',
         ));
+        $this->sendOrder($commande);
 
 
+    }
+
+    private function sendOrder(Commande $commande) {
         $this->em->persist($commande);
         $this->em->flush();
 
@@ -43,16 +47,15 @@ class OPTrade
             $this->em->persist($ticket);
         }
         $this->em->flush();
-
     }
 
     /**
-     * Renvoie l'entity dispo a jour de la commande passer
+     * Met a jour la table dispo a jour de la commande passer
      *
      * @param object $commande
      *
      */
-    public function Dispo(Commande $commande) {
+    public function dispo(Commande $commande) {
 
         $date = $commande->getVisiteDate();
         $numero = 0;
@@ -74,5 +77,4 @@ class OPTrade
         $this->em->persist($dispo["0"]);
         $this->em->flush();
     }
-
 }

@@ -110,7 +110,7 @@ class DefaultController extends Controller
         // Create a charge: this will charge the user's card
         try {
 
-            $trade->Payment($commande, $token, $total);
+            $trade->payment($commande, $token, $total);
 
             $trade->dispo($commande);
 
