@@ -40,11 +40,6 @@ class DefaultController extends Controller
         $form = $this->get('form.factory')->create(CommandeType::class, $commande);
         $form->handleRequest($request);
         if ($request->isMethod('POST') && $form->isValid()) {
-            $validator = $this->get('validator');
-            $listErrors = $validator->validate($commande);
-            if(count($listErrors) > 0) {
-                return new Response((string) $listErrors);
-            }
 
             $dispo = $this->getDoctrine()->getManager()->getRepository('OPTradeBundle:Dispo')->findOneBy(array('date' => $commande->getVisiteDate()));
             if (!$dispo == null) {
